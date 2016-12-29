@@ -11,24 +11,20 @@ library(fuzzr)
 # need to provide an 'x' argument to pass along to my_function(). We do not have
 # to supply a delimiter, as my_function() declares a default value for this
 # argument.
-my_fuzz_results <- fuzz_function(my_function, "n", x = 1:3, tests = test_all(), test_delim = ";")
+my_fuzz_results <- fuzz_function(my_function, "n", x = 1:3, tests = test_all())
 
 # Produce a data frame summary of the results
 fuzz_df <- as.data.frame(my_fuzz_results)
 knitr::kable(fuzz_df)
 
 ## ------------------------------------------------------------------------
-dbl_single_index <- fuzz_df[fuzz_df$n == "dbl_single", ]$results_index
+fuzz_call(my_fuzz_results, n = "dbl_single")
+fuzz_value(my_fuzz_results, n = "dbl_single")
 
-fuzz_call(my_fuzz_results, dbl_single_index)
-fuzz_value(my_fuzz_results, dbl_single_index)
-
-date_single_index <- fuzz_df[fuzz_df$n == "date_single", ]$results_index
-
-fuzz_call(my_fuzz_results, date_single_index)
+fuzz_call(my_fuzz_results, n = "date_single")
 # Hm, dates can be coerced into very large integers. Let's see how long this
 # result is.
-nchar(fuzz_value(my_fuzz_results, date_single_index))
+nchar(fuzz_value(my_fuzz_results, n = "date_single"))
 # Oh dear.
 
 ## ---- results = "asis"---------------------------------------------------
