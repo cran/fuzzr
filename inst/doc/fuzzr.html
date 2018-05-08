@@ -12,7 +12,7 @@
 
 <meta name="author" content="Matthew Lincoln" />
 
-<meta name="date" content="2017-05-01" />
+<meta name="date" content="2018-05-08" />
 
 <title>fuzzr: Fuzz-Testing for R Functions</title>
 
@@ -20,46 +20,256 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
 
-<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
 
 </head>
 
@@ -70,33 +280,33 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">fuzzr: Fuzz-Testing for R Functions</h1>
 <h4 class="author"><em>Matthew Lincoln</em></h4>
-<h4 class="date"><em>2017-05-01</em></h4>
+<h4 class="date"><em>2018-05-08</em></h4>
 
 
 
 <p>R’s dynamic typing can be both blessing and curse. One drawback is that a function author must decide how to check which inputs should be accepted, and which should throw warnings or errors. fuzzr helps you to check how cleanly and informatively your function responds to a range of unexpected inputs.</p>
 <p>Say we build a function intended to a single string and a single integer, repeat the string that number of times, and paste it together using a given delimiter:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_function &lt;-<span class="st"> </span>function(x, n, <span class="dt">delim =</span> <span class="st">&quot; - &quot;</span>) {
-  <span class="kw">paste</span>(<span class="kw">rep</span>(x, n), <span class="dt">collapse =</span> delim)
-}
-
-<span class="kw">my_function</span>(<span class="st">&quot;fuzz&quot;</span>, <span class="dv">7</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">my_function &lt;-<span class="st"> </span><span class="cf">function</span>(x, n, <span class="dt">delim =</span> <span class="st">&quot; - &quot;</span>) {</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="kw">paste</span>(<span class="kw">rep</span>(x, n), <span class="dt">collapse =</span> delim)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">my_function</span>(<span class="st">&quot;fuzz&quot;</span>, <span class="dv">7</span>)</a></code></pre></div>
 <pre><code>## [1] &quot;fuzz - fuzz - fuzz - fuzz - fuzz - fuzz - fuzz&quot;</code></pre>
 <p>Simple enough. However, this function quickly breaks if we pass in somewhat unexpected values:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">my_function</span>(<span class="st">&quot;fuzz&quot;</span>, <span class="st">&quot;bar&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">my_function</span>(<span class="st">&quot;fuzz&quot;</span>, <span class="st">&quot;bar&quot;</span>)</a></code></pre></div>
 <pre><code>## Warning in paste(rep(x, n), collapse = delim): NAs introduced by coercion</code></pre>
 <pre><code>## Error in rep(x, n): invalid 'times' argument</code></pre>
 <p>Let’s test this with a full battery of fuzz tests:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(fuzzr)
-<span class="co"># Note that, while we are specifically fuzz testing the 'n' argument, we still </span>
-<span class="co"># need to provide an 'x' argument to pass along to my_function(). We do not have</span>
-<span class="co"># to supply a delimiter, as my_function() declares a default value for this</span>
-<span class="co"># argument.</span>
-my_fuzz_results &lt;-<span class="st"> </span><span class="kw">fuzz_function</span>(my_function, <span class="st">&quot;n&quot;</span>, <span class="dt">x =</span> <span class="dv">1</span>:<span class="dv">3</span>, <span class="dt">tests =</span> <span class="kw">test_all</span>())
-
-<span class="co"># Produce a data frame summary of the results</span>
-fuzz_df &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(my_fuzz_results)
-knitr::<span class="kw">kable</span>(fuzz_df)</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">library</span>(fuzzr)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co"># Note that, while we are specifically fuzz testing the 'n' argument, we still </span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co"># need to provide an 'x' argument to pass along to my_function(). We do not have</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co"># to supply a delimiter, as my_function() declares a default value for this</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co"># argument.</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">my_fuzz_results &lt;-<span class="st"> </span><span class="kw">fuzz_function</span>(my_function, <span class="st">&quot;n&quot;</span>, <span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">tests =</span> <span class="kw">test_all</span>())</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co"># Produce a data frame summary of the results</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">fuzz_df &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(my_fuzz_results)</a>
+<a class="sourceLine" id="cb6-10" data-line-number="10">knitr<span class="op">::</span><span class="kw">kable</span>(fuzz_df)</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -527,7 +737,7 @@ knitr::<span class="kw">kable</span>(fuzz_df)</code></pre></div>
 <td align="left">NA</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
-<td align="left">(list) object cannot be coerced to type ‘integer’</td>
+<td align="left">(list) object cannot be coerced to type ‘double’</td>
 <td align="left">NA</td>
 <td align="right">42</td>
 </tr>
@@ -567,7 +777,7 @@ knitr::<span class="kw">kable</span>(fuzz_df)</code></pre></div>
 <td align="left">NA</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
-<td align="left">(list) object cannot be coerced to type ‘integer’</td>
+<td align="left">(list) object cannot be coerced to type ‘double’</td>
 <td align="left">NA</td>
 <td align="right">46</td>
 </tr>
@@ -584,7 +794,7 @@ knitr::<span class="kw">kable</span>(fuzz_df)</code></pre></div>
 </tbody>
 </table>
 <p>Almost all the unexpected values for <code>n</code> throw the fairly generic warning <code>invalid 'times' argument</code>, which really comes from the <code>rep</code> function within <code>my_function</code>. Some types, like doubles, factors, and even dates (!) don’t throw errors, but instead return a result. We can check the value of that result with <code>fuzz_value()</code>, and the call originating it with <code>fuzz_call()</code>, both of which search for the first test result that matches a regex of the test name. The argument should match the name of the argument tested with in <code>fuzz_function</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fuzz_call</span>(my_fuzz_results, <span class="dt">n =</span> <span class="st">&quot;dbl_single&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">fuzz_call</span>(my_fuzz_results, <span class="dt">n =</span> <span class="st">&quot;dbl_single&quot;</span>)</a></code></pre></div>
 <pre><code>## $fun
 ## [1] &quot;my_function&quot;
 ## 
@@ -594,9 +804,9 @@ knitr::<span class="kw">kable</span>(fuzz_df)</code></pre></div>
 ## 
 ## $args$x
 ## [1] 1 2 3</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fuzz_value</span>(my_fuzz_results, <span class="dt">n =</span> <span class="st">&quot;dbl_single&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">fuzz_value</span>(my_fuzz_results, <span class="dt">n =</span> <span class="st">&quot;dbl_single&quot;</span>)</a></code></pre></div>
 <pre><code>## [1] &quot;1 - 2 - 3&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fuzz_call</span>(my_fuzz_results, <span class="dt">n =</span> <span class="st">&quot;date_single&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">fuzz_call</span>(my_fuzz_results, <span class="dt">n =</span> <span class="st">&quot;date_single&quot;</span>)</a></code></pre></div>
 <pre><code>## $fun
 ## [1] &quot;my_function&quot;
 ## 
@@ -606,22 +816,22 @@ knitr::<span class="kw">kable</span>(fuzz_df)</code></pre></div>
 ## 
 ## $args$x
 ## [1] 1 2 3</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Hm, dates can be coerced into very large integers. Let's see how long this</span>
-<span class="co"># result is.</span>
-<span class="kw">nchar</span>(<span class="kw">fuzz_value</span>(my_fuzz_results, <span class="dt">n =</span> <span class="st">&quot;date_single&quot;</span>))</code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co"># Hm, dates can be coerced into very large integers. Let's see how long this</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="co"># result is.</span></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="kw">nchar</span>(<span class="kw">fuzz_value</span>(my_fuzz_results, <span class="dt">n =</span> <span class="st">&quot;date_single&quot;</span>))</a></code></pre></div>
 <pre><code>## [1] 135873</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Oh dear.</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="co"># Oh dear.</span></a></code></pre></div>
 <p>Perhaps we might chose to enforce this with a tailored type check (using <a href="https://cran.r-project.org/package=assertthat">assertthat</a>) that catches unexpected values and produces a more informative error message.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_function_2 &lt;-<span class="st"> </span>function(x, n, <span class="dt">delim =</span> <span class="st">&quot; - &quot;</span>) {
-  assertthat::<span class="kw">assert_that</span>(assertthat::<span class="kw">is.count</span>(n))
-  <span class="kw">paste</span>(<span class="kw">rep</span>(x, n), <span class="dt">collapse =</span> delim)
-}
-
-<span class="co"># We will abbreviate this check by only testing against double and date vectors</span>
-fuzz_df_2 &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">fuzz_function</span>(my_function_2, <span class="st">&quot;n&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;fuzz&quot;</span>, 
-                                         <span class="dt">tests =</span> <span class="kw">c</span>(<span class="kw">test_dbl</span>(), <span class="kw">test_date</span>())))
-
-knitr::<span class="kw">kable</span>(fuzz_df_2)</code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">my_function_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="cf">function</span>(x, n, <span class="dt">delim =</span> <span class="st">&quot; - &quot;</span>) {</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">  assertthat<span class="op">::</span><span class="kw">assert_that</span>(assertthat<span class="op">::</span><span class="kw">is.count</span>(n))</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3">  <span class="kw">paste</span>(<span class="kw">rep</span>(x, n), <span class="dt">collapse =</span> delim)</a>
+<a class="sourceLine" id="cb16-4" data-line-number="4">}</a>
+<a class="sourceLine" id="cb16-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="co"># We will abbreviate this check by only testing against double and date vectors</span></a>
+<a class="sourceLine" id="cb16-7" data-line-number="7">fuzz_df_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">fuzz_function</span>(my_function_<span class="dv">2</span>, <span class="st">&quot;n&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;fuzz&quot;</span>, </a>
+<a class="sourceLine" id="cb16-8" data-line-number="8">                                         <span class="dt">tests =</span> <span class="kw">c</span>(<span class="kw">test_dbl</span>(), <span class="kw">test_date</span>())))</a>
+<a class="sourceLine" id="cb16-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb16-10" data-line-number="10">knitr<span class="op">::</span><span class="kw">kable</span>(fuzz_df_<span class="dv">2</span>)</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -751,18 +961,18 @@ knitr::<span class="kw">kable</span>(fuzz_df_2)</code></pre></div>
 <div id="fuzzing-multiple-arguments" class="section level2">
 <h2>Fuzzing multiple arguments</h2>
 <p><code>fuzz_function</code> works by mapping several test inputs over one argument of a function while keeping the other arguments static. <code>p_fuzz_function</code> lets you specify a battery of tests for each variable as a named list of named lists. Every test combination is then run. These tests can be specified using the provided functions like <code>test_char</code>, or with variable inputs you provide. Remember that each test condition must, itself, be named.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_args &lt;-<span class="st"> </span><span class="kw">list</span>(
-  <span class="dt">x =</span> <span class="kw">list</span>(
-    <span class="dt">simple_char =</span> <span class="st">&quot;test&quot;</span>,
-    <span class="dt">numbers =</span> <span class="dv">1</span>:<span class="dv">3</span>
-  ),
-  <span class="dt">n =</span> <span class="kw">test_all</span>(),
-  <span class="dt">delim =</span> <span class="kw">test_all</span>())
-
-pr &lt;-<span class="st"> </span><span class="kw">p_fuzz_function</span>(my_function_2, p_args)
-prdf &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(pr)
-
-knitr::<span class="kw">kable</span>(<span class="kw">head</span>(prdf))</code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">p_args &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2">  <span class="dt">x =</span> <span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb17-3" data-line-number="3">    <span class="dt">simple_char =</span> <span class="st">&quot;test&quot;</span>,</a>
+<a class="sourceLine" id="cb17-4" data-line-number="4">    <span class="dt">numbers =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb17-5" data-line-number="5">  ),</a>
+<a class="sourceLine" id="cb17-6" data-line-number="6">  <span class="dt">n =</span> <span class="kw">test_all</span>(),</a>
+<a class="sourceLine" id="cb17-7" data-line-number="7">  <span class="dt">delim =</span> <span class="kw">test_all</span>())</a>
+<a class="sourceLine" id="cb17-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb17-9" data-line-number="9">pr &lt;-<span class="st"> </span><span class="kw">p_fuzz_function</span>(my_function_<span class="dv">2</span>, p_args)</a>
+<a class="sourceLine" id="cb17-10" data-line-number="10">prdf &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(pr)</a>
+<a class="sourceLine" id="cb17-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb17-12" data-line-number="12">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">head</span>(prdf))</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
